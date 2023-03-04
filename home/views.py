@@ -20,13 +20,6 @@ FaviconView = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
 class IndexView(TemplateView):
     template_name = "index.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-    
-class DonateView(TemplateView):
-    template_name = "donate.html"
 
 class LogoutView(RedirectView):
     permanent = True
@@ -37,10 +30,7 @@ class LogoutView(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
 class ProfileView(TemplateView):
-    template_name = "upload.html"
-
-    def post(self, request, *args, **kwargs):
-        pass
+    template_name = "profile.html"
         
 class LoginView(TemplateView):
     template_name = "authentication/login.html"
