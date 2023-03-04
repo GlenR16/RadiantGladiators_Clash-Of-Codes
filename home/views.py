@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView,RedirectView
 from .forms import PasswordChangeForm,UserLoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from .models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.shortcuts import get_object_or_404
@@ -123,20 +124,8 @@ class DashboardView(LoginRequiredMixin,TemplateView):
     login_url = '/login'
     redirect_field_name = 'redirect_to'
 
-    def post(self, request, *args, **kwargs):
-        ticket_id = request.POST.get("id","")
-        status = request.POST.get("status","")
-        if ticket_id != "" and status != "":
-            animal = get_object_or_404(Animal,pk=ticket_id)
-            if animal.status == "Allotted" and animal in request.user.ticket:
-                animal.status = STATUS[status]
-                animal.save()
-                return self.render_to_response({"submitted":True})
-        return self.render_to_response({"submitted":False})
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tickets"] = self.request.user.tickets.all()
         return context
 
 class RecommendedView(LoginRequiredMixin,TemplateView):
@@ -145,42 +134,16 @@ class RecommendedView(LoginRequiredMixin,TemplateView):
     login_url = '/login'
     redirect_field_name = 'redirect_to'
 
-    def post(self, request, *args, **kwargs):
-        ticket_id = request.POST.get("id","")
-        status = request.POST.get("status","")
-        if ticket_id != "" and status != "":
-            animal = get_object_or_404(Animal,pk=ticket_id)
-            if animal.status == "Allotted" and animal in request.user.ticket:
-                animal.status = STATUS[status]
-                animal.save()
-                return self.render_to_response({"submitted":True})
-        return self.render_to_response({"submitted":False})
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tickets"] = self.request.user.tickets.all()
         return context
 
 
 @login_required(login_url='/login/')
 def APIView(request):
-    offset_lat = 360 * SEARCH_RADIUS / 40075016.686
-    offset_long = 360 * SEARCH_RADIUS / 40075017
-    up = request.user.latitude + offset_lat
-    down = request.user.latitude - offset_lat
-    left = request.user.longitude - offset_long
-    right = request.user.longitude + offset_long
-    valid = Animal.objects.filter(latitude__lte=up,latitude__gte=down,longitude__lte=right,longitude__gte=left,status="Pending")
-    if request.method == "POST":
-        id = request.POST.get("id",None)
-        animal = get_object_or_404(valid,pk=id)
-        user = User.objects.get(pk=request.user.id)
-        animal.status = STATUS["ALLOTTED"]
-        animal.save()
-        user.tickets.add(animal)
-        return JsonResponse(data={"submitted":True})
-    data = AnimalSerializer(valid,many=True)
-    return JsonResponse(data=data.data,safe=False)
+    return None
 
 def send_email(animal):
     """
@@ -189,13 +152,7 @@ def send_email(animal):
     message = get_template("email.html").render(Context({
         'animal': animal
     }))
-    offset_lat = 360 * SEARCH_RADIUS / 40075016.686
-    offset_long = 360 * SEARCH_RADIUS / 40075017
-    up = animal.latitude + offset_lat
-    down = animal.latitude - offset_lat
-    left = animal.longitude - offset_long
-    right = animal.longitude + offset_long
-    valid = [ a.email  for a in User.objects.filter(latitude__lte=up,latitude__gte=down,longitude__lte=right,longitude__gte=left) if a.alerts ]
+    valid = [ ]
     mail = EmailMessage(
         subject="Injured Animal reported near you.",
         body=message,
