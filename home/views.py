@@ -65,7 +65,7 @@ def get_otp(request):
     password1 = request.POST.get("password1","")
     password2 = request.POST.get("password2","")
     if name != "" and verification_file != "" and who_to_date != "" and email != "" and phone != ""  and password1 != "" and password2 != "" and dob != "" and gender != "" and password1 != "" and password2 != "" and password1 == password2:
-        user = User(email=email,name=name,verification_file=verification_file,phone=phone,email=email,dob=dob,gender=gender)
+        user = User(email=email,name=name,verification_file=verification_file,phone=phone,dob=dob,gender=gender)
         user.set_password(password1)
         user.save()
         print("otp==>",user.otp)

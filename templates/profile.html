@@ -19,7 +19,7 @@
                     <div class="w-full md:w-3/12 md:mx-2">
                         <!-- Profile Card -->
                         <div class="bg-white p-3 border-t-4 
-                        {% if request.status %}
+                        {% if request.user.status %}
                         border-green-400
                         {% else %}
                         border-red-400
@@ -81,7 +81,15 @@
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Gender</div>
-                                        <div class="px-4 py-2">{{request.user.gender}}</div>
+                                        <div class="px-4 py-2">
+                                            {% if request.user.gender == "M" %}
+                                                Male
+                                            {% elif request.user.gender == "F" %}
+                                                Female
+                                            {% else %}
+                                                Non Binary
+                                            {% endif %}
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Contact No.</div>
