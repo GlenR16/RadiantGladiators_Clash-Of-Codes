@@ -4,12 +4,6 @@ from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from .managers import UserManager
 import random
 
-GENDER = {
-    "Male":"M",
-    "Female":"F",
-    "Non-binary":"N"
-}
-
 def upload_v(instance,filename):
     return "verification/"+str(uuid.uuid4())+"."+filename.split(".")[-1]
 
@@ -71,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Swipe(models.Model):
     first_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="first")
     second_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="second")
-    type = models.CharField(max_length=63)
+    type = models.CharField(max_length=20)
     createdAt = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.type
