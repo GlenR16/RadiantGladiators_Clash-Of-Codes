@@ -184,15 +184,34 @@ for (let i = 0; i < 5; i++) {
 }
 
 const crsfToken = document.querySelector("input[name='csrfmiddlewaretoken']")
-const from = docu
-const to = document.getElementById()
 
-function leftSwipe(to){
-
-  fetch("/api/", 
-  {
+function leftSwipe(to) {
+  const formData = new FormData();
+  formData.append("id", toUser.value);
+  formData.append("csrfmiddlewaretoken", crsfToken.value);
+  formData.append("swipe", "LEFT");
+  fetch("/api/", {
     method: "POST",
-    body
+    body: formData,
   })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.submitted) return alert("Some error occured!");
+    })
+    .catch((err) => console.log(err));
 }
-function rightSwipe(to){}
+function rightSwipe(to) {
+  const formData = new FormData();
+  formData.append("id", toUser.value);
+  formData.append("csrfmiddlewaretoken", crsfToken.value);
+  formData.append("swipe", "RIGHT");
+  fetch("/api/", {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (!data.submitted) return alert("Some error occured!");
+    })
+    .catch((err) => console.log(err));
+}
