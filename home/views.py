@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView,RedirectView
 from .forms import PasswordChangeForm,UserLoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from .models import User
+from .models import User,Interest,Swipe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.shortcuts import get_object_or_404
@@ -65,7 +65,7 @@ def get_otp(request):
     password1 = request.POST.get("password1","")
     password2 = request.POST.get("password2","")
     if name != "" and verification_file != "" and who_to_date != "" and email != "" and phone != ""  and password1 != "" and password2 != "" and dob != "" and gender != "" and password1 != "" and password2 != "" and password1 == password2:
-        user = User(email=email,name=name,verification_file=verification_file,phone=phone,email=email,dob=dob,gender=gender)
+        user = User(email=email,name=name,verification_file=verification_file,phone=phone,dob=dob,gender=gender)
         user.set_password(password1)
         user.save()
         print("otp==>",user.otp)
@@ -75,42 +75,54 @@ def get_otp(request):
 def check_otp(request):
     userid = request.POST.get("id","")
     otp = request.POST.get("otp","")
-    current_user = get_object_or_404(User,pk=userid)
-    if otp != "" and otp==current_user.otp:        
-        return JsonResponse(data={"":user.id})
-    return JsonResponse(data={"error":True})
+    user = get_object_or_404(User,pk=userid)
+    if otp != "" and otp==user.otp:
+        user.email_is_verified = True
+        user.save()
+        return JsonResponse(data={"correct":True})
+    return JsonResponse(data={"correct":False})
 
 
 class SignupView(TemplateView):
     template_name = "authentication/signup.html"
 
     def post(self, request, *args, **kwargs):
-        name = request.POST.get("name","")
-        email = request.POST.get("email","")
-        phone = request.POST.get("phone","")
-        password1 = request.POST.get("password1","")
-        password2 = request.POST.get("password2","")
-        dob = request.POST.get("dob","")
-        gender = request.POST.get("gender","")
+        userid = request.POST.get("id","")
+        user = get_object_or_404(User,pk=userid)
         bio = request.POST.get("bio","")
         college = request.POST.get("college","")
         insta_username = request.POST.get("insta_username","")
         height = request.POST.get("height","")
-        who_to_date = request.POST.get("who_to_date","")
         country = request.POST.get("country","")
-        interests = request.POST.get("interests","")
+        interests = { j.name:request.POST.get(j.name,"") for j in Interest.objects.all() if request.POST.get(j.name,"") != ""}
         is_habit_drink = request.POST.get("is_habit_drink","")
         is_habit_smoke = request.POST.get("is_habit_smoke","")
-        verification_file = request.FILES.get("verification_file","")
         profile_image = request.FILES.get("profile_image","")
-        if name != "" and verification_file != "" and email != "" and phone != "" and bio != "" and password1 != "" and password2 != "" and dob != "" and gender != "" and city != "" and state != "" and postalcode != "" and alerts != "" and country != "" and newsletter != "" and password1 != "" and password1 == password2:
-            user = User()
-            user.set_password(password1)
-            user.save()
-            login(request,user)
-            return redirect("/dashboard")
-        else:
-            return self.render_to_response({"error":True})
+        if bio != "":
+            user.bio = bio
+        if college != "":
+            user.college = college
+        if insta_username != "":
+            user.insta_username = insta_username
+        if country != "":
+            user.country = country
+        if len(interests) != 0:
+            for k in interests:
+                if interests[k] == True:
+                    user.interests.add(Interest.objects.get(name=k))
+                else:
+                    user.interests.remove(Interest.objects.get(name=k))
+        if height != "":
+            user.height = height
+        if is_habit_drink != "":
+            user.is_habit_drink = is_habit_drink
+        if is_habit_smoke != "":
+            user.is_habit_smoke = is_habit_smoke
+        if profile_image != "":
+            user.profile_image = profile_image
+        user.save()
+        login(request,user)
+        return redirect("/dashboard/")
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -144,6 +156,9 @@ class DashboardView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        profiles = User.objects.order_by('date_joined', 'likes')
+        print(profiles)
+        context["profiles"] = profiles
         return context
 
 class RecommendedView(LoginRequiredMixin,TemplateView):
@@ -152,8 +167,6 @@ class RecommendedView(LoginRequiredMixin,TemplateView):
     login_url = '/login'
     redirect_field_name = 'redirect_to'
 
-    
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
@@ -161,7 +174,22 @@ class RecommendedView(LoginRequiredMixin,TemplateView):
 
 @login_required(login_url='/login/')
 def APIView(request):
-    return None
+    userid = request.POST.get("id","")
+    swipe = request.POST.get("swipe","")
+    user = get_object_or_404(User,pk=userid)
+    if swipe == "RIGHT":
+        swipe = Swipe(first_user=request.user,second_user=user,type="LIKE")
+        swipe.save()
+        return JsonResponse(data={"submitted":True})
+    elif swipe == "LEFT":
+        swipe = Swipe(first_user=request.user,second_user=user,type="DISLIKE")
+        swipe.save()
+        return JsonResponse(data={"submitted":True})
+    return JsonResponse(data={"submitted":False})
+
+@login_required(login_url='/login/')
+def Recommendations(request):
+    pass
 
 def send_email(animal):
     """

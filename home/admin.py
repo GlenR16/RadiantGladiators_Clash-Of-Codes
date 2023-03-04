@@ -1,7 +1,7 @@
 from django.contrib.admin.decorators import register
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User,Interest,Swipe
 from .forms import UserChangeForm,UserCreationForm
 # Register your models here.
 
@@ -26,3 +26,5 @@ class UserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('id',)
 
+admin.site.register(Interest)
+admin.site.register(Swipe)

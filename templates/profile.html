@@ -24,7 +24,7 @@
                         ">
                             <div class="image overflow-hidden">
                                 <img class="h-auto w-full mx-auto"
-                                    src="https://api.lorem.space/image/face"
+                                    src="{% if request.user.profile_image %}{{request.user.profile_image.url}}{% else %}{% static 'images/default_pfp.svg' %}{% endif %}"
                                     alt="">
                             </div>
                             <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{request.user.name}}</h1>
@@ -44,7 +44,7 @@
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Member since</span>
-                                    <span class="ml-auto">{{request.user.date_joined}}</span>
+                                    <span class="ml-auto">{{request.user.date_joined.date}}</span>
                                 </li>
                             </ul>
                         </div>
