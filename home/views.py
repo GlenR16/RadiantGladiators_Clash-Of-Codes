@@ -36,11 +36,18 @@ class ProfileView(TemplateView):
     def post(self, request, *args, **kwargs):
         bio = request.POST.get("bio","")
         address = request.POST.get("address","")
-        profile_image = request.POST.get("profile_image","")
-        profile_image = request.POST.get("profile_image","")
-        profile_image = request.POST.get("profile_image","")
+        is_habit_drink = request.POST.get("is_habit_drink","")
+        is_habit_smoke = request.POST.get("is_habit_smoke","")
+        insta_username = request.POST.get("insta_username","")
+        linkedin_username = request.POST.get("linkedin_username","")
+        twitter_username = request.POST.get("twitter_username","")
         
         return self.render_to_response({"form":form})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["interests"] = Interest.objects.all()
+        return context
         
 class LoginView(TemplateView):
     template_name = "authentication/login.html"
