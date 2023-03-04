@@ -54,6 +54,33 @@ class LoginView(TemplateView):
         context["form"] = UserLoginForm(self.request.user)
         return context
 
+def get_otp(request):
+    name = request.POST.get("name","")
+    phone = request.POST.get("phone","")
+    email = request.POST.get("email","")
+    dob = request.POST.get("dob","")
+    gender = request.POST.get("gender","")
+    verification_file = request.FILES.get("verification_file","")
+    who_to_date = request.POST.get("who_to_date","")
+    password1 = request.POST.get("password1","")
+    password2 = request.POST.get("password2","")
+    if name != "" and verification_file != "" and who_to_date != "" and email != "" and phone != ""  and password1 != "" and password2 != "" and dob != "" and gender != "" and password1 != "" and password2 != "" and password1 == password2:
+        user = User(email=email,name=name,verification_file=verification_file,phone=phone,email=email,dob=dob,gender=gender)
+        user.set_password(password1)
+        user.save()
+        print("otp==>",user.otp)
+        return JsonResponse(data={"id":user.id})
+    return JsonResponse(data={"error":True})
+
+def check_otp(request):
+    userid = request.POST.get("id","")
+    otp = request.POST.get("otp","")
+    current_user = get_object_or_404(User,pk=userid)
+    if otp != "" and otp==current_user.otp:        
+        return JsonResponse(data={"":user.id})
+    return JsonResponse(data={"error":True})
+
+
 class SignupView(TemplateView):
     template_name = "authentication/signup.html"
 
@@ -61,22 +88,23 @@ class SignupView(TemplateView):
         name = request.POST.get("name","")
         email = request.POST.get("email","")
         phone = request.POST.get("phone","")
-        about = request.POST.get("about","")
         password1 = request.POST.get("password1","")
         password2 = request.POST.get("password2","")
-        website = request.POST.get("website","")
-        address = request.POST.get("address","")
-        city = request.POST.get("city","")
-        state = request.POST.get("state","")
-        postalcode = request.POST.get("postalcode","")
-        activemembers = request.POST.get("activemembers","")
-        alerts = request.POST.get("alerts","")
+        dob = request.POST.get("dob","")
+        gender = request.POST.get("gender","")
+        bio = request.POST.get("bio","")
+        college = request.POST.get("college","")
+        insta_username = request.POST.get("insta_username","")
+        height = request.POST.get("height","")
+        who_to_date = request.POST.get("who_to_date","")
         country = request.POST.get("country","")
-        newsletter = request.POST.get("newsletter","")
-        verificationfile = request.FILES.get("verificationfile","")
-        if name != "" and verificationfile != "" and email != "" and phone != "" and about != "" and password1 != "" and password2 != "" and website != "" and address != "" and city != "" and state != "" and postalcode != "" and alerts != "" and country != "" and newsletter != "" and password1 != "" and password1 == password2:
-            address = address +", "+ city +" "+ postalcode+", " + state +", "+ country
-            user = User(name=name,email=email,phone=phone,verification_file=verificationfile,about=about,active_members=activemembers,website="https://"+website,address=address,alerts=checkbox[alerts],newsletters=checkbox[newsletter])
+        interests = request.POST.get("interests","")
+        is_habit_drink = request.POST.get("is_habit_drink","")
+        is_habit_smoke = request.POST.get("is_habit_smoke","")
+        verification_file = request.FILES.get("verification_file","")
+        profile_image = request.FILES.get("profile_image","")
+        if name != "" and verification_file != "" and email != "" and phone != "" and bio != "" and password1 != "" and password2 != "" and dob != "" and gender != "" and city != "" and state != "" and postalcode != "" and alerts != "" and country != "" and newsletter != "" and password1 != "" and password1 == password2:
+            user = User()
             user.set_password(password1)
             user.save()
             login(request,user)
