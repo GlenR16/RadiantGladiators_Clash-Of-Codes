@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'dist/dashboard.css' %}">
+{% endblock css %}
 {% block title %}Dashboard{% endblock title %}
 {% block content %}
 <!-- Profile Cards -->
 <div>
-    <section class="w-64 mx-auto bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg">
+    <!-- <section class="w-64 mx-auto bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg">
         <div class="flex items-center justify-between">
             <span class="text-gray-400 text-sm">2d ago</span>
             <span class="text-emerald-400">
@@ -32,7 +35,12 @@
             <span>40%</span>
         </div>
 
-    </section>
+    </section> -->
+    <div id="swiper"></div>
 </div>
 {% endblock content %}
+{% block scripts %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock scripts %}
+
 
