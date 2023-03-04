@@ -235,17 +235,11 @@
                                 </div>
                                 <div class="text-gray-700 m-[5px]">
                                     <div>
-                                        <input list="magicHouses" id="interests" placeholder="kajlsflkwef">
-                                        <datalist id="magicHouses">
-                                            <option value="Gryfindor">
-                                            <option value="Hufflepuff">
-                                            <option value="Slytherin">
-                                            <option value="Ravenclaw">
-                                            <option value="Horned Serpent">
-                                            <option value="Thunderbird">
-                                            <option value="Pukwudgie">
-                                            <option value="Wumpus">
-                                        </datalist>
+                                        <select name="interests" id="interests">
+                                            {% for i in interests %}
+                                                <option value="{{i.name}}">{{i.name}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                     <div class="gap-1 flex flex-wrap" id="interestsList"></div>
                                 </div>
