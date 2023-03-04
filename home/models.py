@@ -37,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     college = models.CharField(max_length=255,blank=True,null=True)
     status = models.BooleanField(default=True)
     dob = models.DateField()
-    user_score = models.FloatField()
+    user_score = models.FloatField(default=0)
     otp = models.IntegerField(default=generate_otp)
     insta_username = models.CharField(max_length=255,blank=True,null=True)
     height = models.FloatField(blank=True,null=True)

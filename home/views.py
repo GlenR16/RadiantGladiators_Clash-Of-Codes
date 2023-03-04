@@ -34,9 +34,11 @@ class ProfileView(TemplateView):
     template_name = "profile.html"
     
     def post(self, request, *args, **kwargs):
-        name = request.POST.get("name","")
-        phone = request.POST.get("phone","")
-        email = request.POST.get("email","")
+        bio = request.POST.get("bio","")
+        address = request.POST.get("address","")
+        profile_image = request.POST.get("profile_image","")
+        profile_image = request.POST.get("profile_image","")
+        profile_image = request.POST.get("profile_image","")
         
         return self.render_to_response({"form":form})
         
@@ -84,7 +86,7 @@ def check_otp(request):
     userid = request.POST.get("id","")
     otp = request.POST.get("otp","")
     user = get_object_or_404(User,pk=userid)
-    if otp != "" and otp==user.otp:
+    if otp != "" and int(otp)==user.otp:
         user.email_is_verified = True
         user.save()
         return JsonResponse(data={"correct":True})
