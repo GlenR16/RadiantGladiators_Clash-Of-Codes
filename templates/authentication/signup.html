@@ -5,128 +5,33 @@
 {% endblock css %}
 {% block title %}Signup{% endblock title %}
 {% block content %}
-<a id="page1">
-<div class="border-4 border-red-300 bg-neutral-800 hidden" id="page_2">
-    <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
-      <div class="md:col-span-1">
-        <div class="px-4 sm:px-0">
-          <h3 class="text-base font-semibold leading-6 text-white">Profile</h3>
-          <p class="mt-1 text-sm text-white">This information will be displayed publicly so be careful what you share.</p>
-        </div>
-      </div>
-      <div class="mt-5 md:col-span-2 md:mt-0">
-        <form action="" method="post">
-          {% csrf_token %}
-          <div class="shadow sm:overflow-hidden sm:rounded-md">
-            <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
-              <div class="grid grid-cols-3 gap-6">
-                <div class="col-span-3 sm:col-span-2">
-                  <label for="company-website" class="block text-sm font-medium text-gray-700">Instagram ID</label>
-                  <div class="mt-1 flex rounded-md shadow-sm">
-                    <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">http://</span>
-                    <input type="text" name="company-website" id="company-website" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="www.example.com">
-                  </div>
-                </div>
-              </div>
-  
-              <div>
-                <label for="about" class="block text-sm font-medium text-gray-700">Write Something About Yourself</label>
-                <div class="mt-1">
-                  <textarea id="about" name="about" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="My name is John. I'm good at"></textarea>
-                </div>
-                <!-- <p class="mt-2 text-sm text-gray-500">Brief description about the aims and working of your oganization</p> -->
-              </div>
-  
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Upload Profile Picture</label>
-                <div class="mt-1 flex items-center">
-                  <span class="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
-                    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  </span>
-                  <button type="button" class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Change</button>
-                </div>
-              </div>
 
-              <!-- COUNTRY -->
-              <div class="col-span-6 sm:col-span-3">
-                <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
-
-              <div class="col-span-6">
-                <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
-                <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-              </div>
-
-              <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" name="city" id="city" autocomplete="address-level2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-              </div>
-
-              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-                <input type="text" name="region" id="region" autocomplete="address-level1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-              </div>
-
-              <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-              </div>
-              <!-- COUNTRY END -->
-
-            </div>
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <a href="#page2"><button type="button" onclick="page3()" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Skip</button></a>
-            </div>
-          </div>
+<div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800" id="first_page">
+  <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
+    <div class="md:col-span-1">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base font-semibold leading-6 text-white">Personal Information</h3>
+        <p class="mt-1 text-sm text-white">Use a permanent address where you can receive mail.</p>
       </div>
     </div>
-  </div>
-</a>
-<!-- PAGE 2 END -->
-  <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
-      <div class="border-t border-gray-200"></div>
-    </div>
-  </div>
-  <!-- PAGE 1 -->
-  <a id="page2">
-  <div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800" id="page_1">
-    <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
-      <div class="md:col-span-1">
-        <div class="px-4 sm:px-0">
-          <h3 class="text-base font-semibold leading-6 text-white">Personal Information</h3>
-          <p class="mt-1 text-sm text-white">Use a permanent address where you can receive mail.</p>
-        </div>
-      </div>
-      <div class="mt-5 md:col-span-2 md:mt-0">
+    <div class="mt-5 md:col-span-2 md:mt-0">
           <div class="overflow-hidden shadow sm:rounded-md">
             <div class="bg-white px-4 py-5 sm:p-6">
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                   <label for="first-name" class="block text-sm font-medium text-gray-700">Name</label>
-                  <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                  <input type="text" name="first-name" id="first-name" autocomplete="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
                 </div>
-  
+
                 <div class="col-span-6 sm:col-span-3">
                   <label for="last-name" class="block text-sm font-medium text-gray-700">Phone No.</label>
-                  <input type="number" name="phone" id="phone" autocomplete="family-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                  <input type="text" name="phone" id="phone" autocomplete="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
                 </div>
 
                 <!-- DOB -->
-                <div class="col-span-6 sm:col-span-3">
-
-                  <div class="relative max-w-sm">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input datepicker id="dob" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Date of Birth">
+                <div class="col-span-6 sm:col-span-3 -z-1">
+                  <div class=" max-w-sm">
+                    <input type="date" id="dob" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 z-0" placeholder="Enter Date of Birth">
                   </div>
                   
                 </div>
@@ -148,16 +53,16 @@
                       </div>
                       <div class="flex items-center">
                         <input id="push-email" name="gender" value="N" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                        <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Prefer not to Say</label>
+                        <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Non Binary</label>
                       </div>
                     </div>
                   </fieldset>
                 </div>
                 <!-- GENDER END -->
-  
+
                 <div class="col-span-6 sm:col-span-4">
                   <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                  <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                  <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
                 </div>
 
 
@@ -202,10 +107,6 @@
                         <input id="push-email" value="N" name="to-date" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
                         <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Non Binary</label>
                       </div>
-                      <div class="flex items-center">
-                        <input id="push-email" value="A" name="to-date" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                        <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Any</label>
-                      </div>
                     </div>
                   </fieldset>
                 </div>
@@ -239,8 +140,8 @@
                 </div>
                 <div class="col-span-6 sm:col-span-4">
                   <div class="mb-4 md:flex md:justify-between">
-                    <div class="mb-4 md:mr-2 md:mb-0">
-                        <label class="block mb-2 text-sm font-bold text-gray-700" for="otp">
+                    <div class="mb-4 md:mr-2 md:mb-0 hidden" id="c_otp">
+                      <label class="block mb-2 text-sm font-bold text-gray-700" for="otp">
                             Enter OTP
                         </label>
                         <input
@@ -252,132 +153,95 @@
                         <!-- <p class="text-xs italic text-red-500">Please enter your password.</p> -->
                     </div>
                     <div class="md:ml-2">
-                      <button onclick="get_otp();" type="button" class="bg-neutral-800 p-4 rounded text-white">Send OTP</button>
+                      <button onclick="get_otp();" type="button" id="send_otp_button" class="bg-neutral-800 p-4 rounded text-white">Send OTP</button>
                     </div>
                 </div>
-                </div>
-                <!-- PASSWORD END -->
-
-                <!-- <div class="col-span-6 sm:col-span-3">
-                  <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                  <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div>
-  
-                <div class="col-span-6">
-                  <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
-                  <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                  <input type="text" name="city" id="city" autocomplete="address-level2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
-                  <input type="text" name="region" id="region" autocomplete="address-level1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
-  
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                  <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div> -->
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <a href="#page3"><button type="button" onclick="page2()" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Skip</button></a>
-            </div>
           </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <button type="button" onclick="page2();" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" disabled id="nextbutton">Next</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </a>
-  <!-- PAGE 1 END -->
-  <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
-      <div class="border-t border-gray-200"></div>
-    </div>
-  </div>
-  <!-- PAGE 3 -->
-  <a id="page3">
-  <div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800 hidden" id="page_3">
+</div>
+
+<div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800 hidden" id="second_page">
     <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
       <div class="md:col-span-1">
         <div class="px-4 sm:px-0">
-          <h3 class="text-base font-semibold leading-6 text-white">Notifications</h3>
-          <p class="mt-1 text-sm text-white">Decide which communications you'd like to receive and how.</p>
+          <h3 class="text-base font-semibold leading-6 text-white">Profile</h3>
+          <p class="mt-1 text-sm text-white">This information will be displayed publicly so be careful what you share.</p>
         </div>
       </div>
       <div class="mt-5 md:col-span-2 md:mt-0">
-          <div class="overflow-hidden shadow sm:rounded-md">
+        <form action="" method="post">
+          <input type="hidden" id="uid" name="id" value="">
+          {% csrf_token %}
+          <div class="shadow sm:overflow-hidden sm:rounded-md">
             <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
-              <fieldset>
-                <legend class="sr-only">By Email</legend>
-                <div class="text-sm font-semibold text-gray-900" aria-hidden="true">By Email</div>
-                <div class="mt-4 space-y-4">
-                  <div class="flex items-start">
-                    <div class="flex h-5 items-center">
-                      <input id="comments" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label for="comments" class="font-medium text-gray-700">Alerts</label>
-                      <p class="text-gray-500">Get notified about the location of the injured animals.</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start">
-                    <div class="flex h-5 items-center">
-                      <input id="candidates" name="candidates" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label for="candidates" class="font-medium text-gray-700">New members</label>
-                      <p class="text-gray-500">Get notified when a someone wants to join your organization.</p>
-                    </div>
-                  </div>
-                  <div class="flex items-start">
-                    <div class="flex h-5 items-center">
-                      <input id="offers" name="offers" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label for="offers" class="font-medium text-gray-700">Donation</label>
-                      <p class="text-gray-500">Get notified when someone is willing to donate in your organization.</p>
-                    </div>
+              <div class="grid grid-cols-3 gap-6">
+                <div class="col-span-3 sm:col-span-2">
+                  <label for="company-website" class="block text-sm font-medium text-gray-700">Instagram Profile Link</label>
+                  <div class="mt-1 flex rounded-md shadow-sm">
+                    <input type="text" name="insta_username" id="insta_username" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="https://instagram.com/xyz">
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
-                <legend class="contents text-sm font-semibold text-gray-900">Push Notifications</legend>
-                <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
-                <div class="mt-4 space-y-4">
-                  <div class="flex items-center">
-                    <input id="push-everything" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700">Everything</label>
-                  </div>
-                  <div class="flex items-center">
-                    <input id="push-email" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Same as email</label>
-                  </div>
-                  <div class="flex items-center">
-                    <input id="push-nothing" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="push-nothing" class="ml-3 block text-sm font-medium text-gray-700">No push notifications</label>
-                  </div>
+              </div>
+  
+              <div>
+                <label for="about" class="block text-sm font-medium text-gray-700">Write Something About Yourself</label>
+                <div class="mt-1">
+                  <textarea id="about" name="bio" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="My name is John. I'm good at"></textarea>
                 </div>
-              </fieldset>
+                <!-- <p class="mt-2 text-sm text-gray-500">Brief description about the aims and working of your oganization</p> -->
+              </div>
+  
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Upload Profile Picture</label>
+                <div class="mt-1 flex items-center">
+                  <span class="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
+                    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </span>
+                  <input type="file" class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                </div>
+              </div>
+
+              <!-- COUNTRY -->
+              <div class="col-span-6 sm:col-span-3">
+                <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>India</option>
+                </select>
+              </div>
+
+              <div class="col-span-6">
+                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                <input type="text" name="address" id="address" autocomplete="address" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+              </div>
+              <div class="col-span-6">
+                <label for="college" class="block text-sm font-medium text-gray-700">College</label>
+                <input type="text" name="college" id="college" autocomplete="college" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+              </div>
+              <div class="col-span-6">
+                <label for="height" class="block text-sm font-medium text-gray-700">Height</label>
+                <input type="text" name="height" id="height" autocomplete="height" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+              </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <a href="index.html"><button type="button" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save My Details</button></a>
+              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
             </div>
           </div>
-        </form>
       </div>
     </div>
   </div>
-</a>
-  <!-- PAGE 3 END -->
-
+</div>
 {% endblock content %}
 {% block scripts %}
 <script src="https://unpkg.com/js-datepicker"></script>

@@ -86,7 +86,7 @@ def check_otp(request):
     userid = request.POST.get("id","")
     otp = request.POST.get("otp","")
     user = get_object_or_404(User,pk=userid)
-    if otp != "" and otp==user.otp:
+    if otp != "" and int(otp)==user.otp:
         user.email_is_verified = True
         user.save()
         return JsonResponse(data={"correct":True})

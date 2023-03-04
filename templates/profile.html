@@ -8,17 +8,17 @@
 <!-- Profile page -->
 
 <form method="post">
-    <div class="bg-gray-100">
+    <div class="m-[30px] rounded-[30px] bg-pink-100">
         <div class="w-full text-white bg-main-color">
             {% csrf_token %}
             <!-- End of Navbar -->
 
-            <div class="container mx-auto my-5 p-5">
+            <div class="container">
                 <div class="md:flex no-wrap md:-mx-2 ">
                     <!-- Left Side -->
                     <div class="w-full md:w-3/12 md:mx-2">
                         <!-- Profile Card -->
-                        <div class="bg-white p-3 border-t-4 
+                        <div class="rounded-[30px] m-[20px] bg-white p-5 
                         {% if request.user.status %}
                         border-green-400
                         {% else %}
@@ -30,7 +30,7 @@
                                     src="{% if request.user.profile_image %}{{request.user.profile_image.url}}{% else %}{% static 'images/default_pfp.svg' %}{% endif %}"
                                     alt="">
                             </div>
-                            <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{request.user.name}}</h1>
+                            <h1 class="text-pink-600 font-bold text-xl leading-8 my-1">{{request.user.name}}</h1>
                             <input class="text-sm text-gray-500 hover:text-gray-600 leading-6" name="college"
                                 value="{{request.user.college}}">
                             <textarea name="" id="" cols="30" rows="10">
@@ -64,8 +64,8 @@
                     <div class="w-full md:w-9/12 mx-2 h-full overflow-y-scroll">
                         <!-- Profile tab -->
                         <!-- About Section -->
-                        <div class="bg-white p-3 shadow-sm rounded-sm">
-                            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                        <div class="bg-white p-4 shadow-sm rounded-[30px] m-[30px]">
+                            <div class="flex items-center space-x-2 font-semibold text-pink-600 leading-8">
                                 <span clas="text-green-500">
                                     <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor">
@@ -132,11 +132,11 @@
                         <div class="my-4"></div>
 
                         <!-- Experience and education -->
-                        <div class="bg-white p-3 shadow-sm rounded-sm">
+                        <div class="bg-white p-3 shadow-sm rounded-[30px] m-[30px]">
 
                             <div class="grid grid-cols-2">
                                 <div>
-                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                    <div class="flex items-center space-x-2 font-semibold text-pink-600 leading-8 mb-3">
                                         <span clas="text-green-500">
                                             <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -148,43 +148,43 @@
                                     </div>
                                     <ul class="list-inside space-y-2">
                                         <li>
-                                            <div class="text-teal-600">How often do you drink?</div>
-                                            <div class="text-gray-500 text-xs">
+                                            <div class="text-pink-600 m-[10px]">How often do you drink?</div>
+                                            <div class="text-gray-500 text-xs m-[10px]">
                                                 <label>
                                                     <input type="radio" name="is_habit_drink" value="Often" {% if request.user.is_habit_drink == "Often" %}selected{% endif %} />
-                                                    <span>Often</span>
+                                                    <span class="m-[5px]">Often</span>
                                                 </label>
                                                 <label>
                                                     <input type="radio" name="is_habit_drink" value="Sometimes" {% if request.user.is_habit_drink == "Sometimes" %}selected{% endif %} />
-                                                    <span>Sometimes</span>
+                                                    <span class="m-[5px]">Sometimes</span>
                                                 </label>
                                                 <label>
                                                     <input type="radio" name="is_habit_drink" value="Never" {% if request.user.is_habit_drink == "Never" %}selected{% endif %} />
-                                                    <span>Never</span>
+                                                    <span class="m-[5px]">Never</span>
                                                 </label>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="text-teal-600">How often do you smoke?</div>
-                                            <div class="text-gray-500 text-xs">
+                                            <div class="text-pink-600 m-[10px]">How often do you smoke?</div>
+                                            <div class="text-gray-500 text-xs m-[10px]">
                                                 <label>
                                                     <input type="radio" name="is_habit_smoke" value="Often" {% if request.user.is_habit_smoke == "Often" %}selected{% endif %}/>
-                                                    <span>Often</span>
+                                                    <span class="m-[5px]">Often</span>
                                                 </label>
                                                 <label>
                                                     <input type="radio" name="is_habit_smoke" value="Sometimes" {% if request.user.is_habit_smoke == "Sometimes" %}selected{% endif %}/>
-                                                    <span>Sometimes</span>
+                                                    <span class="m-[5px]">Sometimes</span>
                                                 </label>
                                                 <label>
                                                     <input type="radio" name="is_habit_smoke" value="Never" {% if request.user.is_habit_smoke == "Never" %}selected{% endif %} />
-                                                    <span>Never</span>
+                                                    <span class="m-[5px]">Never</span>
                                                 </label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div>
-                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                    <div class="flex items-center space-x-2 font-semibold text-pink-600 leading-8 mb-3">
                                         <span clas="text-green-500">
                                             <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -200,21 +200,21 @@
                                     <ul class="list-inside space-y-2">
                                         <li>
                                             <div>
-                                                <div class="text-teal-600">Instagram URL</div>
+                                                <div class="text-pink-600">Instagram URL</div>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.insta_username}}" />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <div class="text-teal-600">LinkedIn URL</div>
+                                                <div class="text-pink-600">LinkedIn URL</div>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.linkedin_username}}" />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <div class="text-teal-600">Twitter URL</div>
+                                                <div class="text-pink-600">Twitter URL</div>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.twitter_username}}" />
                                             </div>
@@ -223,7 +223,7 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                                <div class="flex items-center space-x-2 font-semibold text-pink-600 leading-8">
                                     <span clas="text-green-500">
                                         <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -233,7 +233,7 @@
                                     </span>
                                     <span class="tracking-wide">Interests</span>
                                 </div>
-                                <div class="text-gray-700">
+                                <div class="text-gray-700 m-[5px]">
                                     <div>
                                         <input list="magicHouses" id="interests" placeholder="kajlsflkwef">
                                         <datalist id="magicHouses">
