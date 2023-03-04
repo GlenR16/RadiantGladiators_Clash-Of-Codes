@@ -180,10 +180,14 @@ def APIView(request):
     if swipe == "RIGHT":
         swipe = Swipe(first_user=request.user,second_user=user,type="LIKE")
         swipe.save()
+        user.likes += 1
+        user.save() 
         return JsonResponse(data={"submitted":True})
     elif swipe == "LEFT":
         swipe = Swipe(first_user=request.user,second_user=user,type="DISLIKE")
         swipe.save()
+        user.dislikes += 1
+        user.save() 
         return JsonResponse(data={"submitted":True})
     return JsonResponse(data={"submitted":False})
 

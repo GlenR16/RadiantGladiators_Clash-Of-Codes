@@ -51,8 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     who_to_date = models.CharField(max_length=2)
     interests = models.ManyToManyField(Interest,blank=True)
     premium = models.BooleanField(default=False)
-    is_habit_drink = models.CharField(max_length=2,blank=True,null=True)
-    is_habit_smoke = models.CharField(max_length=2,blank=True,null=True)
+    is_habit_drink = models.CharField(max_length=10,blank=True,null=True)
+    is_habit_smoke = models.CharField(max_length=10,blank=True,null=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     # Internal
     is_staff = models.BooleanField(default=False)
