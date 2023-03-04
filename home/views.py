@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic.base import TemplateView,RedirectView
 from .forms import PasswordChangeForm,UserLoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from .models import User,Interest,Swipe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
@@ -11,6 +11,7 @@ from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
 from django.db.models import Sum
+from aiml.verification.verify import verifyImage
 
 checkbox = {
     "on":True,
@@ -31,6 +32,13 @@ class LogoutView(RedirectView):
 
 class ProfileView(TemplateView):
     template_name = "profile.html"
+    
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get("name","")
+        phone = request.POST.get("phone","")
+        email = request.POST.get("email","")
+        
+        return self.render_to_response({"form":form})
         
 class LoginView(TemplateView):
     template_name = "authentication/login.html"
@@ -70,7 +78,7 @@ def get_otp(request):
         user.save()
         print("otp==>",user.otp)
         return JsonResponse(data={"id":user.id})
-    return JsonResponse(data={"error":True})
+    return HttpResponse(status=500)
 
 def check_otp(request):
     userid = request.POST.get("id","")
@@ -120,6 +128,7 @@ class SignupView(TemplateView):
             user.is_habit_smoke = is_habit_smoke
         if profile_image != "":
             user.profile_image = profile_image
+            user.face_detection_probablity = verifyImage(profile_image.file)
         user.save()
         login(request,user)
         return redirect("/dashboard/")
@@ -156,8 +165,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profiles = User.objects.order_by('date_joined', 'likes')
-        print(profiles)
+        profiles = User.objects.order_by('date_joined', 'likes')[:100]
         context["profiles"] = profiles
         return context
 
@@ -181,12 +189,25 @@ def APIView(request):
         swipe = Swipe(first_user=request.user,second_user=user,type="LIKE")
         swipe.save()
         user.likes += 1
+        user.user_score = min(user.user_score+request.user.user_score *0.01,3000)
+        swipes = Swipe.objects.get(first_user=user)
+        right = swipes.filter(type="RIGHT")
+        left = swipes.filter(type="LEFT")
+        if right.count() >= swipes.count() *0.8:
+            selfuser = User.objects.get(id=request.user.id)
+            selfuser.score -= 50
+            selfuser.save()
         user.save() 
         return JsonResponse(data={"submitted":True})
     elif swipe == "LEFT":
         swipe = Swipe(first_user=request.user,second_user=user,type="DISLIKE")
         swipe.save()
         user.dislikes += 1
+        swipes = Swipe.objects.get(second_user=user)
+        right = swipes.filter(type="RIGHT")
+        left = swipes.filter(type="LEFT")
+        if left.count() >= swipes.count() *0.8:
+            user.user_score += 20
         user.save() 
         return JsonResponse(data={"submitted":True})
     return JsonResponse(data={"submitted":False})
