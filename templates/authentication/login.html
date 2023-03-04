@@ -2,13 +2,13 @@
 {% load static %}
 {% block title %}Login{% endblock title %}
 {% block content %}
-<div class="container mx-auto grow">
+<div class="container mx-auto grow rounded-[30px]">
     <div class="flex justify-center px-6 my-12">
         <div class="w-full xl:w-3/4 lg:w-11/12 flex">
-            <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg" style="background-image: url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')"></div>
-                <div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-                    <h3 class="pt-4 text-2xl text-center">Login to your Account!</h3>
-                    <form action="" method="post" class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+            <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg" style="background-image: url('https://m.media-amazon.com/images/I/618cKa7E8EL._SL1500_.jpg')"></div>
+                <div class="w-full lg:w-7/12 bg-pink-100 p-5 rounded-lg lg:rounded-l-none">
+                    <h3 class="pt-4 text-3xl font-extrabold text-center text-pink-600">Login to your Account!</h3>
+                    <form action="" method="post" class="px-8 pt-6 pb-8 mb-4 bg-white rounded m-[30px]">
                         {% csrf_token %}
                         {% if form.non_field_errors %}
                             {% for error in form.non_field_errors %}
@@ -30,13 +30,13 @@
                             </div>
                         </div>
                         <div class="mb-6 text-center">
-                            <button class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
+                            <button class="w-full px-4 py-2 font-bold text-white bg-pink-600 rounded-full hover:bg-pink-800 focus:outline-none focus:shadow-outline" type="submit">
                             Login
                             </button>
                         </div>
                         <hr class="mb-6 border-t" />
                         <div class="text-center">
-                            <a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800" href="/signup">
+                            <a class="inline-block text-sm text-pink-600 align-baseline hover:text-pink-800" href="/signup">
                             Don't have an account? Signup!
                             </a>
                         </div>
