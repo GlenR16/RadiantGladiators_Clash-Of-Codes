@@ -40,6 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_score = models.FloatField(default=0)
     otp = models.IntegerField(default=generate_otp)
     insta_username = models.CharField(max_length=255,blank=True,null=True)
+    linkedin_username = models.CharField(max_length=255,blank=True,null=True)
+    twitter_username = models.CharField(max_length=255,blank=True,null=True)
     height = models.FloatField(blank=True,null=True)
     gender = models.CharField(max_length=2)
     who_to_date = models.CharField(max_length=2)
