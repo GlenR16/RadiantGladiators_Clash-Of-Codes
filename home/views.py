@@ -12,6 +12,9 @@ from django.template import Context
 from django.template.loader import get_template
 from django.db.models import Sum
 from aiml.verification.verify import verifyImage
+from aiml.verification.scoring import get_score
+from django.urls import reverse
+
 
 checkbox = {
     "on":True,
@@ -41,8 +44,23 @@ class ProfileView(TemplateView):
         insta_username = request.POST.get("insta_username","")
         linkedin_username = request.POST.get("linkedin_username","")
         twitter_username = request.POST.get("twitter_username","")
-        
-        return self.render_to_response({"form":form})
+        interests_list = request.POST.get("main_list","")
+        user = User.objects.get(id=request.user.id)
+        user.bio =  bio
+        print(interests_list)
+        if interests_list != "":
+            for i in interests_list.split(","):
+                user.interests.add(Interest.objects.get(name=i))
+        else:
+            user.interests.clear()
+        user.address =  address 
+        user.is_habit_drink =  is_habit_drink 
+        user.is_habit_smoke =  is_habit_smoke
+        user.insta_username =  insta_username 
+        user.linkedin_username =  linkedin_username 
+        user.twitter_username =  twitter_username
+        user.save() 
+        return JsonResponse(data={"submitted":True})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -84,6 +102,8 @@ def get_otp(request):
     if name != "" and verification_file != "" and who_to_date != "" and email != "" and phone != ""  and password1 != "" and password2 != "" and dob != "" and gender != "" and password1 != "" and password2 != "" and password1 == password2:
         user = User(email=email,name=name,verification_file=verification_file,phone=phone,dob=dob,gender=gender)
         user.set_password(password1)
+        user.save()
+        user.user_score = get_score(user)
         user.save()
         print("otp==>",user.otp)
         return JsonResponse(data={"id":user.id})
@@ -139,6 +159,7 @@ class SignupView(TemplateView):
         if profile_image != "":
             user.profile_image = profile_image
             user.face_detection_probablity = verifyImage(profile_image)
+        user.user_score = get_score(user)
         user.save()
         login(request,user)
         return redirect("/dashboard/")
