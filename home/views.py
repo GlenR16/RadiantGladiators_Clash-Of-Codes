@@ -104,6 +104,7 @@ class SignupView(TemplateView):
     template_name = "authentication/signup.html"
 
     def post(self, request, *args, **kwargs):
+        print("here-->",request.POST)
         userid = request.POST.get("id","")
         user = get_object_or_404(User,pk=userid)
         bio = request.POST.get("bio","")
@@ -137,7 +138,7 @@ class SignupView(TemplateView):
             user.is_habit_smoke = is_habit_smoke
         if profile_image != "":
             user.profile_image = profile_image
-            user.face_detection_probablity = verifyImage(profile_image.file)
+            user.face_detection_probablity = verifyImage(profile_image)
         user.save()
         login(request,user)
         return redirect("/dashboard/")
@@ -179,7 +180,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
         return context
 
 class RecommendedView(LoginRequiredMixin,TemplateView):
-    template_name = "dashboard.html"
+    template_name = "recommendations.html"
 
     login_url = '/login'
     redirect_field_name = 'redirect_to'

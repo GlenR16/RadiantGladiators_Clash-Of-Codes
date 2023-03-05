@@ -14,7 +14,7 @@ class UserAdmin(UserAdmin):
     list_filter = ('id_is_verified', 'is_active')
     fieldsets = (
         ('User Data', {'fields': ('email', 'name', 'phone','country',"id_is_verified",'verification_file','status','dob','who_to_date')}),
-        ('Data', {'fields': ('bio','profile_image','address','college','otp','insta_username','user_score','height','interests','is_habit_drink','is_habit_smoke','premium')}),
+        ('Data', {'fields': ('bio','profile_image','face_detection_probablity','address','college','otp','insta_username','user_score','height','interests','is_habit_drink','is_habit_smoke','premium')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions','password')}),  
     )
     add_fieldsets = (
