@@ -2,6 +2,7 @@
 {% load static %}
 {% block css %}
 <!-- <link rel="stylesheet" href="{% static 'dist/profile.css' %}"> -->
+
 {% endblock css %}
 {% block title %}Profile{% endblock title %}
 {% block content %}
@@ -25,7 +26,7 @@
                         border-red-400
                         {% endif %}
                         ">
-                            <div class="image overflow-hidden">
+                            <div class="image overflow-hidden rounded-[30px]">
                                 <img class="h-auto w-full mx-auto"
                                     src="{% if request.user.profile_mage %}{{request.user.profile_image.url}}{% else %}{% static 'images/default_pfp.svg' %}{% endif %}"
                                     alt="">
@@ -82,7 +83,7 @@
 
                     </div>
                     <!-- Right Side -->
-                    <div class="w-full md:w-9/12 mx-2 h-full overflow-y-scroll">
+                    <div class="w-full md:w-9/12 mx-2 h-full">
                         <!-- Profile tab -->
                         <!-- About Section -->
                         <div class="bg-white p-4 shadow-sm rounded-[30px] m-[30px]">
@@ -126,7 +127,7 @@
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Address</div>
                                         <input class="px-4 py-2" placeholder="Enter address here..."
-                                            value="{{request.user.address}}" />
+                                            value="{{request.user.address}}" name="address" />
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Country</div>
@@ -136,7 +137,7 @@
                                         <div class="px-4 py-2 font-semibold">Height</div>
                                         <div class="px-4 py-2 flex">
                                             <input name="height" class="w-10" value="{{request.user.height}}" />
-                                            <span>feet</span>
+                                            <span> (in Ft)</span>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
@@ -222,23 +223,23 @@
                                     <ul class="list-inside space-y-2">
                                         <li>
                                             <div>
-                                                <i class="fa-brands fa-instagram"></i>
+                                                <i class="fa-brands fa-instagram text-black fa-xl"></i>
                                                 <input class="text-gray-500 text-xs"
-                                                    value="{{request.user.insta_username}}" />
+                                                    value="{{request.user.insta_username}}" name="insta_username" />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <i class="fa-brands fa-linkedin"></i>
+                                                <i class="fa-brands fa-linkedin text-black fa-xl"></i>
                                                 <input class="text-gray-500 text-xs"
-                                                    value="{{request.user.linkedin_username}}" />
+                                                    value="{{request.user.linkedin_username}}" name="linkedin_username"  />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <i class="fa-brands fa-twitter"></i>
+                                                <i class="fa-brands fa-twitter text-black fa-xl"></i>
                                                 <input class="text-gray-500 text-xs"
-                                                    value="{{request.user.twitter_username}}" />
+                                                    value="{{request.user.twitter_username}}"  name="twitter_username" />
                                             </div>
                                         </li>
                                     </ul>
@@ -279,13 +280,14 @@
                                     </div>
                                     <div class="text-pink-600 m-[10px]">
                                         <label for="interests">What are your interests?</label>
-                                        <select name="interests" id="interests">
+                                        <select id="interests">
                                             <option value="Select" selected disabled hidden ></option>
                                             {% for i in interests %}
                                                 <option value="{{i.name}}">{{i.name}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
+                                    <input type="hidden" name="main_list" value="" id="main_interests">
                                     <div class="gap-1 flex flex-wrap" id="interestsList">
                                         {% for i in request.user.interests.all %}
                                         <div data_attr="{{i}}" class="gap-x-3 mt-3 bg-neutral-700 inline p-2 rounded-3xl text-white">
@@ -303,7 +305,7 @@
                         <!-- End of profile tab -->
                         <div class="items-end w-3/4 mx-auto mb-5">
 
-                            <button type="submit" class="text-white p-2 rounded-lg mb-5 bg-pink-600 hover:bg-pink-700 float-right" >Update</button>
+                            <button type="button" onclick="sendForm()" class="text-white p-2 rounded-lg mb-5 bg-pink-600 hover:bg-pink-700 float-right" >Update</button>
                         </div>
                     </div>
                 </div>
