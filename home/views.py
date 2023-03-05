@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render,redirect
 from django.views.generic.base import TemplateView,RedirectView
 from .forms import PasswordChangeForm,UserLoginForm
@@ -249,7 +250,13 @@ def APIView(request):
 
 @login_required(login_url='/login/')
 def Recommendations(request):
-    pass
+    profiles = User.objects.filter(gender=request.user.who_to_date)
+    profiles_ids = get_close_profiles(request.user,profiles)
+    profiles = []
+    for i in profiles_ids:
+        profiles.append(User.objects.get(id=i))
+    return JsonResponse(data=json.dumps(profiles))
+        
 
 def send_email(animal):
     """
