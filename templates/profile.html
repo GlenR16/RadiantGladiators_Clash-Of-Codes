@@ -33,11 +33,10 @@
                             <h1 class="text-pink-600 font-bold text-xl leading-8 my-1">{{request.user.name}}</h1>
                             <input class="text-sm text-gray-500 hover:text-gray-600 leading-6" name="college"
                                 value="{{request.user.college}}">
-                            <textarea name="" id="" cols="30" rows="10">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi fugiat porro officia veritatis pariatur, velit voluptatibus commodi voluptate molestiae ipsam.
-                            </textarea>
-                            <input class="text-sm text-gray-500 hover:text-gray-600 leading-6" name="bio"
-                                value="{{request.user.bio}}"></p>
+                            <textarea name="bio" id="bio" rows="5">{{request.user.bio}}</textarea>
+                            <!-- <input class="text-sm text-gray-500 hover:text-gray-600 leading-6" name="bio"
+                                value="{{request.user.bio}}"> -->
+                            </p>
                             <ul
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                                 <li class="flex items-center py-3">
@@ -49,6 +48,16 @@
                                         <span class="bg-red-500 py-1 px-2 rounded text-white text-sm">Inactive</span>
                                         {% endif %}
                                     </span>
+                                </li>
+                                <li class="flex justify-around py-3">
+                                    <div>
+                                        <i class="fa-solid fa-thumbs-up text-blue-600"></i>
+                                        <span>{{request.user.likes}}</span>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-thumbs-down text-red-600"></i>
+                                        <span>{{request.user.dislikes}}</span>
+                                    </div>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Member since</span>
@@ -83,7 +92,8 @@
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Email</div>
-                                        <div class="px-4 py-2">{{request.user.email}}</div>
+                                        <a class="text-blue-800"
+                                                href="mailto:{{request.user.email}}">{{request.user.email}}</a>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">Gender</div>
@@ -111,10 +121,10 @@
                                         <div class="px-4 py-2">{{request.user.country}}</div>
                                     </div>
                                     <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Email.</div>
-                                        <div class="px-4 py-2">
-                                            <a class="text-blue-800"
-                                                href="mailto:{{request.user.email}}">{{request.user.email}}</a>
+                                        <div class="px-4 py-2 font-semibold">Height</div>
+                                        <div class="px-4 py-2 flex">
+                                            <input name="height" class="w-10" value="{{request.user.height}}" />
+                                            <span>feet</span>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
@@ -200,21 +210,21 @@
                                     <ul class="list-inside space-y-2">
                                         <li>
                                             <div>
-                                                <div class="text-pink-600">Instagram URL</div>
+                                                <i class="fa-brands fa-instagram"></i>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.insta_username}}" />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <div class="text-pink-600">LinkedIn URL</div>
+                                                <i class="fa-brands fa-linkedin"></i>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.linkedin_username}}" />
                                             </div>
                                         </li>
                                         <li>
                                             <div>
-                                                <div class="text-pink-600">Twitter URL</div>
+                                                <i class="fa-brands fa-twitter"></i>
                                                 <input class="text-gray-500 text-xs"
                                                     value="{{request.user.twitter_username}}" />
                                             </div>
@@ -234,26 +244,60 @@
                                     <span class="tracking-wide">Interests</span>
                                 </div>
                                 <div class="text-gray-700 m-[5px]">
-                                    <div>
+                                    <div class="m-[10px]">
+                                        <label class="text-pink-600 " for="who_to_date">Whom do you want to date?</label>
+                                        <div>
+                                            <label>
+                                                <input type="radio" name="who_to_date" value="M" {% if request.user.is_habit_drink == "M" %}selected{% endif %} />
+                                                <span class="m-[5px]">Male</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="who_to_date" value="F" {% if request.user.is_habit_drink == "M" %}selected{% endif %} />
+                                                <span class="m-[5px]">Female</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="who_to_date" value="NB" {% if request.user.is_habit_drink == "M" %}selected{% endif %} />
+                                                <span class="m-[5px]">Non Binary</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="who_to_date" value="A" {% if request.user.is_habit_drink == "M" %}selected{% endif %} />
+                                                <span class="m-[5px]">All</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="text-pink-600 m-[10px]">
+                                        <label for="interests">What are your interests?</label>
                                         <select name="interests" id="interests">
+                                            <option value="Select" selected disabled hidden ></option>
                                             {% for i in interests %}
                                                 <option value="{{i.name}}">{{i.name}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                                    <div class="gap-1 flex flex-wrap" id="interestsList"></div>
+                                    <div class="gap-1 flex flex-wrap" id="interestsList">
+                                        {% for i in request.user.interests.all %}
+                                        <div data_attr="{{i}}" class="gap-x-3 mt-3 bg-neutral-700 inline p-2 rounded-3xl text-white">
+                                            <input type="checkbox" hidden name="{{i}}" value="true" />
+                                            <div class="inline">{{i}}</div>
+                                            <span onclick="this.parentNode.remove()" >x</span> 
+                                        </div>
+                                        {% endfor %}
+
+                                    </div>
                                 </div>
                             </div>
                             <!-- End of Experience and education grid -->
-                        </div><button type="submit" class="text-black" >Update</button>
+                        </div>
                         <!-- End of profile tab -->
+                        <div class="items-end w-3/4 mx-auto mb-5">
+
+                            <button type="submit" class="text-white p-2 rounded-lg mb-5 bg-pink-600 hover:bg-pink-700 float-right" >Update</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-
 </form>
 
 
