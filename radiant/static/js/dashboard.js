@@ -1,217 +1,116 @@
-console.log("hERE")
+'use strict';
 
-// DOM
-const swiper = document.querySelector('#swiper');
-const like = document.querySelector('#like');
-const dislike = document.querySelector('#dislike');
+var tinderContainer = document.querySelector('.tinder');
+var allCards = document.querySelectorAll('.tinder--card');
+var nope = document.getElementById('nope');
+var love = document.getElementById('love');
 
-// constants
-const urls = [
-  'https://source.unsplash.com/random/1000x1000/?sky',
-  'https://source.unsplash.com/random/1000x1000/?landscape',
-  'https://source.unsplash.com/random/1000x1000/?ocean',
-  'https://source.unsplash.com/random/1000x1000/?moutain',
-  'https://source.unsplash.com/random/1000x1000/?forest'
-];
 
-// variables
-let cardCount = 0;
-
-// Card js
-
-class Card {
-    constructor({
-      imageUrl,
-      onDismiss,
-      onLike,
-      onDislike
-    }) {
-      this.imageUrl = imageUrl;
-      this.onDismiss = onDismiss;
-      this.onLike = onLike;
-      this.onDislike = onDislike;
-      this.#init();
-    }
-  
-    // private properties
-    #startPoint;
-    #offsetX;
-    #offsetY;
-  
-    #isTouchDevice = () => {
-      return (('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        (navigator.msMaxTouchPoints > 0));
-    }
-  
-    #init = () => {
-      const card = document.createElement('div');
-      card.classList.add('card');
-      const img = document.createElement('img');
-      img.src = this.imageUrl;
-      card.append(img);
-      this.element = card;
-      if (this.#isTouchDevice()) {
-        this.#listenToTouchEvents();
-      } else {
-        this.#listenToMouseEvents();
-      }
-    }
-  
-    #listenToTouchEvents = () => {
-      this.element.addEventListener('touchstart', (e) => {
-        const touch = e.changedTouches[0];
-        if (!touch) return;
-        const { clientX, clientY } = touch;
-        this.#startPoint = { x: clientX, y: clientY }
-        document.addEventListener('touchmove', this.#handleTouchMove);
-        this.element.style.transition = 'transform 0s';
-      });
-  
-      document.addEventListener('touchend', this.#handleTouchEnd);
-      document.addEventListener('cancel', this.#handleTouchEnd);
-    }
-  
-    #listenToMouseEvents = () => {
-      this.element.addEventListener('mousedown', (e) => {
-        const { clientX, clientY } = e;
-        this.#startPoint = { x: clientX, y: clientY }
-        document.addEventListener('mousemove', this.#handleMouseMove);
-        this.element.style.transition = 'transform 0s';
-      });
-  
-      document.addEventListener('mouseup', this.#handleMoveUp);
-  
-      // prevent card from being dragged
-      this.element.addEventListener('dragstart', (e) => {
-        e.preventDefault();
-      });
-    }
-  
-    #handleMove = (x, y) => {
-      this.#offsetX = x - this.#startPoint.x;
-      this.#offsetY = y - this.#startPoint.y;
-      const rotate = this.#offsetX * 0.1;
-      this.element.style.transform = `translate(${this.#offsetX}px, ${this.#offsetY}px) rotate(${rotate}deg)`;
-      // dismiss card
-      if (Math.abs(this.#offsetX) > this.element.clientWidth * 0.7) {
-        this.#dismiss(this.#offsetX > 0 ? 1 : -1);
-      }
-    }
-  
-    // mouse event handlers
-    #handleMouseMove = (e) => {
-      e.preventDefault();
-      if (!this.#startPoint) return;
-      const { clientX, clientY } = e;
-      this.#handleMove(clientX, clientY);
-    }
-  
-    #handleMoveUp = () => {
-      this.#startPoint = null;
-      document.removeEventListener('mousemove', this.#handleMouseMove);
-      this.element.style.transform = '';
-    }
-  
-    // touch event handlers
-    #handleTouchMove = (e) => {
-      if (!this.#startPoint) return;
-      const touch = e.changedTouches[0];
-      if (!touch) return;
-      const { clientX, clientY } = touch;
-      this.#handleMove(clientX, clientY);
-    }
-  
-    #handleTouchEnd = () => {
-      this.#startPoint = null;
-      document.removeEventListener('touchmove', this.#handleTouchMove);
-      this.element.style.transform = '';
-    }
-  
-    #dismiss = (direction) => {
-      this.#startPoint = null;
-      document.removeEventListener('mouseup', this.#handleMoveUp);
-      document.removeEventListener('mousemove', this.#handleMouseMove);
-      document.removeEventListener('touchend', this.#handleTouchEnd);
-      document.removeEventListener('touchmove', this.#handleTouchMove);
-      this.element.style.transition = 'transform 1s';
-      this.element.style.transform = `translate(${direction * window.innerWidth}px, ${this.#offsetY}px) rotate(${90 * direction}deg)`;
-      this.element.classList.add('dismissing');
-      setTimeout(() => {
-        this.element.remove();
-      }, 1000);
-      if (typeof this.onDismiss === 'function') {
-        this.onDismiss();
-      }
-      if (typeof this.onLike === 'function' && direction === 1) {
-        this.onLike();
-      }
-      if (typeof this.onDislike === 'function' && direction === -1) {
-        this.onDislike();
-      }
-    }
-  }
-// CARD ENDS
-
-// functions
-function appendNewCard() {
-  const card = new Card({
-    imageUrl: urls[cardCount % 5],
-    onDismiss: appendNewCard,
-    onLike: () => {
-    //   like.style.animationPlayState = 'running';
-    //   like.classList.toggle('trigger');
-    console.log("Like")
-    },
-    onDislike: () => {
-    //   dislike.style.animationPlayState = 'running';
-    //   dislike.classList.toggle('trigger');
-      console.log("Dislike")
-    }
-  });
-  swiper.append(card.element);
-  cardCount++;
-
-  const cards = swiper.querySelectorAll('.card:not(.dismissing)');
-  cards.forEach((card, index) => {
-    card.style.setProperty('--i', index);
-  });
-}
-
-// first 5 cards
-for (let i = 0; i < 5; i++) {
-  appendNewCard();
-}
-
-const crsfToken = document.querySelector("input[name='csrfmiddlewaretoken']")
-
-function leftSwipe(to) {
-  const formData = new FormData();
-  formData.append("id", toUser.value);
-  formData.append("csrfmiddlewaretoken", crsfToken.value);
-  formData.append("swipe", "LEFT");
+function swipeEvent(toUser, dir){
+  let csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']");
+  let formData = new FormData();
+  formData.append("csrfmiddlewaretoken", csrfToken.value);
+  formData.append("id", toUser);
+  formData.append("swipe", dir);
   fetch("/api/", {
     method: "POST",
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.submitted) return alert("Some error occured!");
-    })
-    .catch((err) => console.log(err));
+    body: formData
+  }).then((res)=>res.json())
+  .then((data)=>{
+    if(!data.submitted) return alert("Some Error occured!");
+  }).catch((err)=>console.log(err))
 }
-function rightSwipe(to) {
-  const formData = new FormData();
-  formData.append("id", toUser.value);
-  formData.append("csrfmiddlewaretoken", crsfToken.value);
-  formData.append("swipe", "RIGHT");
-  fetch("/api/", {
-    method: "POST",
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.submitted) return alert("Some error occured!");
-    })
-    .catch((err) => console.log(err));
+function swipeRight(){}
+
+function initCards(card, index) {
+  var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
+
+  newCards.forEach(function (card, index) {
+    card.style.zIndex = allCards.length - index;
+    card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
+    card.style.opacity = (10 - index) / 10;
+  });
+  
+  tinderContainer.classList.add('loaded');
 }
+
+initCards();
+
+allCards.forEach(function (el) {
+  var hammertime = new Hammer(el);
+
+  hammertime.on('pan', function (event) {
+    el.classList.add('moving');
+  });
+
+  hammertime.on('pan', function (event) {
+    if (event.deltaX === 0) return;
+    if (event.center.x === 0 && event.center.y === 0) return;
+
+    tinderContainer.classList.toggle('tinder_love', event.deltaX > 0);
+    tinderContainer.classList.toggle('tinder_nope', event.deltaX < 0);
+
+    var xMulti = event.deltaX * 0.03;
+    var yMulti = event.deltaY / 80;
+    var rotate = xMulti * yMulti;
+
+    event.target.style.transform = 'translate(' + event.deltaX + 'px, ' + event.deltaY + 'px) rotate(' + rotate + 'deg)';
+  });
+
+  hammertime.on('panend', function (event) {
+    el.classList.remove('moving');
+    tinderContainer.classList.remove('tinder_love');
+    tinderContainer.classList.remove('tinder_nope');
+
+    var moveOutWidth = document.body.clientWidth;
+    var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
+
+    event.target.classList.toggle('removed', !keep);
+    if (keep) {
+      event.target.style.transform = '';
+    } else {
+      var endX = Math.max(Math.abs(event.velocityX) * moveOutWidth, moveOutWidth);
+      var toX = event.deltaX > 0 ? endX : -endX;
+      var endY = Math.abs(event.velocityY) * moveOutWidth;
+      var toY = event.deltaY > 0 ? endY : -endY;
+      var xMulti = event.deltaX * 0.03;
+      var yMulti = event.deltaY / 80;
+      var rotate = xMulti * yMulti;
+      if(toX>0) swipeEvent(event.target.getAttribute("toUser"), "RIGHT");
+      else swipeEvent(event.target.getAttribute("toUser"), "LEFT");
+      event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
+      initCards();
+    }
+  });
+});
+
+function createButtonListener(love) {
+  return function (event) {
+    var cards = document.querySelectorAll('.tinder--card:not(.removed)');
+    var moveOutWidth = document.body.clientWidth * 1.5;
+
+    if (!cards.length) return false;
+
+    var card = cards[0];
+
+    card.classList.add('removed');
+    console.log(card.getAttribute("toUser"))
+    if (love) {
+      swipeEvent(card.getAttribute("toUser"), "RIGHT");
+      card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+    } else {
+      swipeEvent(card.getAttribute("toUser"), "LEFT");
+      card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
+    }
+
+    initCards();
+
+    event.preventDefault();
+  };
+}
+
+var nopeListener = createButtonListener(false);
+var loveListener = createButtonListener(true);
+
+nope.addEventListener('click', nopeListener);
+love.addEventListener('click', loveListener);
