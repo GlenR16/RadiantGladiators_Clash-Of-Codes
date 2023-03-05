@@ -6,17 +6,17 @@
 {% block title %}Signup{% endblock title %}
 {% block content %}
 
-<div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800" id="first_page">
+<div class="border-4 border-pink-100 bg-pink-100 m-[30px] rounded-[30px]" id="first_page">
   <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
     <div class="md:col-span-1">
       <div class="px-4 sm:px-0">
-        <h3 class="text-base font-semibold leading-6 text-white">Personal Information</h3>
-        <p class="mt-1 text-sm text-white">Use a permanent address where you can receive mail.</p>
+        <h3 class="text-3xl font-extrabold leading-6 text-pink-600">Personal Information</h3>
+        <p class="mt-1 text-sm text-pink-600 p-[10px]">Use a permanent address where you can receive mail.</p>
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
           <div class="overflow-hidden shadow sm:rounded-md">
-            <div class="bg-white px-4 py-5 sm:p-6">
+            <div class="bg-white px-4 py-5 sm:p-6 rounded-[30px]">
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                   <label for="first-name" class="block text-sm font-medium text-gray-700">Name</label>
@@ -153,14 +153,14 @@
                         <!-- <p class="text-xs italic text-red-500">Please enter your password.</p> -->
                     </div>
                     <div class="md:ml-2">
-                      <button onclick="get_otp();" type="button" id="send_otp_button" class="bg-neutral-800 p-4 rounded text-white">Send OTP</button>
+                      <button onclick="get_otp();" type="button" id="send_otp_button" class="bg-pink-600 p-4 rounded text-white">Send OTP</button>
                     </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-            <button type="button" onclick="page2();" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" disabled id="nextbutton">Next</button>
+            <button type="button" onclick="page2();" class="inline-flex justify-center rounded-md border border-transparent bg-pink-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" disabled id="nextbutton">Next</button>
           </div>
         </div>
       </div>
@@ -168,12 +168,13 @@
   </div>
 </div>
 
-<div class="mt-10 sm:mt-0 border-4 border-red-300 bg-neutral-800 hidden" id="second_page">
+<div class="border-4 border-pink-100 bg-pink-100 m-[30px] rounded-[30px] hidden" id="second_page">
+<!-- <div class="border-4 border-pink-100 bg-pink-100 m-[30px] rounded-[30px]" id="second_page"> -->
     <div class="md:grid md:grid-cols-3 md:gap-6 m-[30px]">
       <div class="md:col-span-1">
         <div class="px-4 sm:px-0">
-          <h3 class="text-base font-semibold leading-6 text-white">Profile</h3>
-          <p class="mt-1 text-sm text-white">This information will be displayed publicly so be careful what you share.</p>
+          <h3 class="text-3xl font-extrabold leading-6 text-pink-600">Profile</h3>
+          <p class="mt-1 text-sm text-pink-600 p-[10px]">This information will be displayed publicly so be careful what you share.</p>
         </div>
       </div>
       <div class="mt-5 md:col-span-2 md:mt-0">
@@ -181,7 +182,7 @@
           <input type="hidden" id="uid" name="id" value="">
           {% csrf_token %}
           <div class="shadow sm:overflow-hidden sm:rounded-md">
-            <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+            <div class="bg-white px-4 py-5 sm:p-6 rounded-[30px]">
               <div class="grid grid-cols-3 gap-6">
                 <div class="col-span-3 sm:col-span-2">
                   <label for="company-website" class="block text-sm font-medium text-gray-700">Instagram Profile Link</label>
@@ -233,9 +234,9 @@
                 <label for="height" class="block text-sm font-medium text-gray-700">Height</label>
                 <input type="text" name="height" id="height" autocomplete="height" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
               </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-red-300 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
+              <div class="px-4 py-3 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
+              </div>
             </div>
           </div>
       </div>
