@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import IndexView,LoginView,LogoutView,SignupView,PasswordChangeView,DashboardView,FaviconView,ProfileView,RecommendedView,get_otp,check_otp
+from .views import IndexView,LoginView,LogoutView,SignupView,PasswordChangeView,DashboardView,FaviconView,ProfileView,RecommendedView,get_otp,check_otp,APIView
 
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
     path("check_otp/",check_otp,name="checkotp"), # User can check their otp.
     #path("change_password/",PasswordChangeView.as_view(),name="change_password"), # User can change their password here.
     path("dashboard/",DashboardView.as_view(),name="dashboard"), # Main Dashboard here.
-    #path("api/",APIView,name="api"), # API  here.
+    path("api/",APIView,name="api"), # API  here.
     path('favicon.ico', FaviconView),
 ]

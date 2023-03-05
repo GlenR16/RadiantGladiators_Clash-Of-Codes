@@ -10,10 +10,9 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.template.loader import get_template
-from django.db.models import Sum
 from aiml.verification.verify import verifyImage
 from aiml.verification.scoring import get_score
-from django.urls import reverse
+from aiml.verification.eloRanking import get_close_profiles
 
 
 checkbox = {
@@ -158,7 +157,7 @@ class SignupView(TemplateView):
             user.is_habit_smoke = is_habit_smoke
         if profile_image != "":
             user.profile_image = profile_image
-            user.face_detection_probablity = verifyImage(profile_image)
+            user.face_detection_probablity = verifyImage(profile_image) * 100
         user.user_score = get_score(user)
         user.save()
         login(request,user)
@@ -208,6 +207,11 @@ class RecommendedView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        profiles = User.objects.filter(gender=self.request.user.who_to_date)
+        profiles_ids = get_close_profiles(self.request.user,profiles)
+        context["profiles"] = []
+        for i in profiles_ids:
+            context["profiles"].append(User.objects.get(id=i))
         return context
 
 
