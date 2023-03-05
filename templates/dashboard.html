@@ -18,7 +18,7 @@
     <div class="tinder--cards">
         {% for profile in profiles %}
         <div toUser="{{profile.id}}" class="tinder--card flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-pink-100 dark:text-gray-900">
-            <img src="{{profile.profile_image.url}}" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square m-[30px]">
+            <img src="{% if profile.profile_image %}{{profile.profile_image.url}}{%else%}{% static 'images/default_pfp.svg' %}{% endif %}" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square m-[30px]">
             <div class="space-y-4 text-center divide-y divide-gray-700">
                 <div class="my-2 space-y-1">
                     <h2 class="text-xl text-pink-600 font-extrabold sm:text-2xl">{{profile.name}}</h2>

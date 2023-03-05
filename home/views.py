@@ -196,7 +196,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profiles = User.objects.order_by('date_joined', 'likes')[:100]
+        profiles = User.objects.order_by('date_joined', 'likes').exclude(id=self.request.user.id)[:100]
         context["profiles"] = profiles
         return context
 
@@ -226,12 +226,13 @@ def APIView(request):
         swipe.save()
         user.likes += 1
         user.user_score = min(user.user_score+request.user.user_score *0.01,3000)
-        swipes = Swipe.objects.get(first_user=user)
+        swipes = Swipe.objects.filter(first_user=user)
         right = swipes.filter(type="RIGHT")
         left = swipes.filter(type="LEFT")
+
         if right.count() >= swipes.count() *0.8:
             selfuser = User.objects.get(id=request.user.id)
-            selfuser.score -= 50
+            selfuser.user_score -= 50
             selfuser.save()
         user.save() 
         return JsonResponse(data={"submitted":True})
@@ -239,7 +240,7 @@ def APIView(request):
         swipe = Swipe(first_user=request.user,second_user=user,type="DISLIKE")
         swipe.save()
         user.dislikes += 1
-        swipes = Swipe.objects.get(second_user=user)
+        swipes = Swipe.objects.filter(second_user=user)
         right = swipes.filter(type="RIGHT")
         left = swipes.filter(type="LEFT")
         if left.count() >= swipes.count() *0.8:
@@ -255,7 +256,7 @@ def Recommendations(request):
     profiles = []
     for i in profiles_ids:
         profiles.append(User.objects.get(id=i))
-    return JsonResponse(data=json.dumps(profiles))
+    return JsonResponse(data=json.dumps(profiles), safe=False)
         
 
 def send_email(animal):

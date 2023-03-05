@@ -3,7 +3,7 @@ def score_profile(profile):
     # baseline score of 800
     # max score of 3000
     profile['interest_len'] = len(profile['interest'])
-    profile['profile_age'] = ((profile['created_at'] - datetime.now()).total_seconds())/(60*60)
+    profile['profile_age'] = ((profile['created_at'].replace(tzinfo=None) - datetime.now().replace(tzinfo=None)).total_seconds())/(60*60)
     score=0
     if profile['is_verified']:
         score+=0.3
@@ -27,4 +27,4 @@ def get_score(user):
         'interest':user.interests.all(),
         'created_at':user.date_joined
     }
-    return score_profile(profile)
+    return score_profile(profile)*1500

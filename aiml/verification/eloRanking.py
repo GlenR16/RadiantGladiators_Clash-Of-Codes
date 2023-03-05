@@ -26,8 +26,8 @@ class EloRecommendationSystem:
         print('predicted score', scores)
         top_indices = np.argsort(scores)[:n]
         # sort descending order and get top n 
-        print('top indices', top_indices)
-        return [self.profiles[i]["id1"] for i in top_indices]
+        print('top indices', top_indices,self.profiles)
+        return [self.profiles[i]["_id"] for i in top_indices]
     
     def jaccard_similarity(self, list1, list2):
         set1 = set(list1)

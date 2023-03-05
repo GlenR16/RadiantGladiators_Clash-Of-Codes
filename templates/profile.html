@@ -7,7 +7,6 @@
 {% block title %}Profile{% endblock title %}
 {% block content %}
 <!-- Profile page -->
-
 <form method="post">
     <div class="m-[30px] rounded-[30px] bg-pink-100">
         <div class="w-full text-white bg-main-color">
@@ -26,9 +25,10 @@
                         border-red-400
                         {% endif %}
                         ">
+                        
                             <div class="image overflow-hidden rounded-[30px]">
                                 <img class="h-auto w-full mx-auto"
-                                    src="{% if request.user.profile_mage %}{{request.user.profile_image.url}}{% else %}{% static 'images/default_pfp.svg' %}{% endif %}"
+                                    src="{% if request.user.profile_image %}{{request.user.profile_image.url}}{% else %}{% static 'images/default_pfp.svg' %}{% endif %}"
                                     alt="">
                                 
 <div class="flex items-center justify-center w-full">
