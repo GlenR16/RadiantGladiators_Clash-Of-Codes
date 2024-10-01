@@ -1,2 +1,4 @@
 env1
 venv
+
+db.sqlite3
